@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .bg-custom {
+            background-image: url('./Images/clouds.jpeg'); /* Replace with your image URL */
+            background-size: cover;
+            background-position: center;
+            width: 700px;
+            border-radius: 10px;
+        
+        }
+    </style>
+    <title>Weather forecast and conditions</title>
+</head>
+<body>
+    <header>
+        
+        <div class="flex flex-row items-center justify-between" style="background-color: #392660;">
+            <img src="./Images/weather-logo.png" class="w-20 ml-10">
+            <input type="text" name="display" id="display" placeholder="Search City or Postcode" class="w-[300px] my-6 px-4 bg-violet-200 border rounded-xl">
+            <button onclick="weatherDisplay()" class="mr-1000 bg-white text-white  px-4 rounded-xl">
+                <img src="./Images/search-icon.png" alt="Search" class="w-6 h-6">
+            </button>
+            <img src="./Images/pk.png" class="w-32 mr-20">
+
+        </div>
+        <div style="background-color: #716197;">
+           <p class="py-2" style="color:#716197 ;">helo</p>
+        </div>
+        <div>
+            <nav class="bg-indigo-950">
+                <ul class="flex flex-row space-x-4 text-white py-2 px-4 justify-between mx-20">
+                    <li>Today</li>
+                    <li>Hourly</li>
+                    <li>10 Day</li>
+                    <li>Weekend</li>
+                    <li>Monthly</li>
+                    <li>Radar</li>
+                    <li>More Forecasts</li>
+                </ul>
+
+            </nav>
+        </div>
+
+    </header>
+    <div class="bg-gradient-to-b from-purple-950 to-purple-800 pt-16 pl-20 space-y-6 pb-10">
+        <div class="flex flex-row space-x-14 ">
+            <div class="flex flex-col bg-custom  ">
+                <p id="city" class=" text-white rounded-t-xl pl-4 py-2" style="background-color:rgba(0, 0, 0, 0.641)">cityName</p>
+                <p id="temperature" class="row-start-2 text-white pl-4" style="font-size: 65px;font-weight: 600;">Temp</p>
+                <p id="condition" class=" text-white pl-4" style="font-weight: 600;">Condition</p>
+                <p id="day" class=" text-white pl-4" style="font-weight: 600; font-size:31px;">Day/Night</p>
+                
+            </div>
+            <div >
+                <img src="./Images/weatherchannel.png" class="w-80 rounded-xl">
+              
+
+            </div>
+           
+        </div>
+        <div class="grid grid-cols-4 bg-white rounded-xl mr-[700px] ">
+            <p id="forecast" style="font-weight: 600;font-size: 22px;" class="col-span-4 pl-4">Today's Forecast for city</p>
+            <p class="row-start-2 pl-4 text-gray-600 " >Morning</p>
+            <p  id="morning" class="col-start-2 row-start-2 text-[20px] text-gray-600">Temp</p>
+            <img src="./Images/wind.png" class="col-start-3 row-start-2 w-20">
+            <p class="row-start-2">--</p>
+            <p class="row-start-3 pl-4 text-gray-600">Afternoon</p>
+            <p  id="afternoon" class="col-start-2 row-start-3 text-[20px] text-gray-600">Temp</p>
+            <img src="./Images/rain.png" class="col-start-3 row-start-3 w-20">
+            <p class="row-start-3">--</p>
+            <p class="row-start-4 pl-4" style="font-weight: 700;">Evening</p>
+            <p  id="evening" class="col-start-2 row-start-4 text-[20px] text-blue-700" style="font-weight: 700;">Temp</p>
+            <img src="./Images/wind.png" class="col-start-3 row-start-4 w-20">
+            <p class="row-start-4">--</p>
+            <p class="row-start-5 pl-4">Overnight</p>
+            <p  id="night" class="col-start-2 row-start-5 text-[20px] text-blue-700" style="font-weight: 700;">Temp</p>
+            <img src="./Images/night-clouds.png" class="col-start-3 row-start-5 w-20">
+            <p class="row-start-5">--</p>
+            <button class="row-start-6 bg-blue-700 text-white rounded-xl ml-8 mb-4" style="font-weight: 700;">Next 48 Hours</button>
+            </div>
+
+            <div class="grid grid-cols-4 rounded-xl bg-white mr-[700px]">
+                <p id="today" class="row-start-1 col-span-4 pl-4" style="font-weight: 600;font-size: 22px;">Weather today in city</p>
+                <p class="row-start-2 col-span-3 pl-4">Feels like</p>
+                <p id="feelsLike" style="font-size:32px; font-weight: 600;" class="pl-4 text-gray-900 row-start-3">Temp</p>
+                <img src="./Images/seni-circle.png" class="row-start-3 col-start-4 w-[130px]">
+                <div class="row-start-4 col-span-2 flex items-center pl-4">
+                    <img src="./Images/meter.png" class="w-[20px] mr-2">
+                    <p>High/Low</p>
+                </div>
+                <p id="low" class="col-start-3 row-start-4">Temp</p>
+                <div class="row-start-4 col-span-2 flex items-center pl-4">
+                    <img src="./Images/wind2.png" class="w-[20px] mr-2">
+                    <p>Wind</p>
+                </div>
+            </div>
+        </div>
+
+        
+        
+    
+    <script>
+let cityName = "";
+
+function displayCityName() {
+    cityName = document.getElementById("display").value;
+}
+
+function lahoreWeather() {
+    return new Promise((resolve, reject) => {
+        if (cityName === "Lahore") {
+            resolve({ city: "Lahore,Punjab", temperature: "29°C", condition: "Smoke",day:"Day 33°C •  Night 27°C",
+            morning:"30°C",
+            afternoon:"29°C",
+            evening:"28°C",
+            night:"28°C",
+            feelsLike:"34°",
+            low:"36°/28°"
+
+             });
+        } else {
+            reject("Lahore Rejected");
+        }
+    });
+}
+
+function multanWeather() {
+    return new Promise((resolve, reject) => {
+        if (cityName === "Multan") {
+            resolve({ city: "Multan,Punjab", temperature: "37°C", condition: "Smoke",day:"Day 38°C •  Night 29°C",
+            morning:"33°C",
+            afternoon:"36°C",
+            evening:"32°C",
+            night:"30°C",
+            feelsLike:"49°",
+            low:"38°/29°"
+
+             });
+        } else {
+            reject("Multan Rejected");
+        }
+    });
+}
+
+function islamabadWeather() {
+    return new Promise((resolve, reject) => {
+        if (cityName === "Islamabad") {
+            resolve({ city: "Islamabad, Islamabad Capital Territory", temperature: "27°C", condition: "Partly Cloudy",day:"Day 31°C •  Night 25°C",
+            morning:"29°C",
+            afternoon:"29°C",
+            evening:"28°C",
+            night:"28°C",
+            feelsLike:"33°",
+            low:"--/26°"
+             });
+        } else {
+            reject("Islamabad Rejected");
+        }
+    });
+}
+
+async function weatherDisplay() {
+    displayCityName();
+    try {
+        let weatherInfo = {};
+        if (cityName === "Lahore") {
+            weatherInfo = await lahoreWeather();
+        } else if (cityName === "Islamabad") {
+            weatherInfo = await islamabadWeather();
+        }else if (cityName === "Multan") {
+            weatherInfo = await multanWeather();
+        }else {
+            throw new Error("City not found");
+        }
+        document.getElementById("city").innerText = weatherInfo.city;
+        document.getElementById("temperature").innerText = weatherInfo.temperature;
+        document.getElementById("condition").innerText = weatherInfo.condition;
+        document.getElementById("day").innerText=weatherInfo.day
+
+        document.getElementById("forecast").innerText=`Today's Forecast for `+weatherInfo.city
+        document.getElementById("morning").innerText=weatherInfo.morning
+        document.getElementById("afternoon").innerText=weatherInfo.afternoon
+        document.getElementById("evening").innerText=weatherInfo.evening
+        document.getElementById("night").innerText=weatherInfo.night
+
+        document.getElementById("today").innerText=`Weather today in `+weatherInfo.city
+        document.getElementById("feelsLike").innerText=weatherInfo.feelsLike
+        document.getElementById("low").innerText=weatherInfo.low
+    } catch (error) {
+        document.getElementById("city").innerText = "Error";
+        document.getElementById("temperature").innerText = "";
+        document.getElementById("condition").innerText = error.message;
+    }
+}
+
+    </script>
+</body>
+</html>
